@@ -527,11 +527,11 @@ function nextRound() {
         var semifinal1 = getMatchElement('main-bracket', round+1, 0);
         drawMatch(semifinal1,
             { code: quarterfinalWinner1, flagCode: teamlist.find(team => team.code === quarterfinalWinner1).flagCode },
-            { code: repechageWinner1, flagCode: teamlist.find(team => team.code === repechageWinner1).flagCode });
+            { code: repechageWinner2, flagCode: teamlist.find(team => team.code === repechageWinner2).flagCode });
         var semifinal2 = getMatchElement('main-bracket', round+1, 1);
         drawMatch(semifinal2,
             { code: quarterfinalWinner2, flagCode: teamlist.find(team => team.code === quarterfinalWinner2).flagCode },
-            { code: repechageWinner2, flagCode: teamlist.find(team => team.code === repechageWinner2).flagCode });
+            { code: repechageWinner1, flagCode: teamlist.find(team => team.code === repechageWinner1).flagCode });
         
         var teamPromoted = repechageGame1.querySelector('.team.advanced');
         teamPromoted.classList.remove('advanced');
