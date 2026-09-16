@@ -87,6 +87,137 @@ const repechageBracketConfig = {
     ]
 };
 
+const GAME_SCHEDULE = {
+    'main-bracket': {
+        0: [
+            { date: 'Jun 11', venue: 'Mexico City' },
+            { date: 'Jun 11', venue: 'Zapopan' },
+            { date: 'Jun 11', venue: 'Toronto' },
+            { date: 'Jun 12', venue: 'Santa Clara' },
+            { date: 'Jun 12', venue: 'East Rutherford' },
+            { date: 'Jun 12', venue: 'Foxborough' },
+            { date: 'Jun 11', venue: 'Inglewood' },
+            { date: 'Jun 12', venue: 'Vancouver' },
+            { date: 'Jun 13', venue: 'Houston' },
+            { date: 'Jun 13', venue: 'Philadelphia' },
+            { date: 'Jun 13', venue: 'Arlington' },
+            { date: 'Jun 13', venue: 'Guadalupe' },
+            { date: 'Jun 14', venue: 'Seattle' },
+            { date: 'Jun 14', venue: 'Inglewood' },
+            { date: 'Jun 14', venue: 'Atlanta' },
+            { date: 'Jun 14', venue: 'Miami Gardens' },
+            { date: 'Jun 15', venue: 'East Rutherford' },
+            { date: 'Jun 15', venue: 'Foxborough' },
+            { date: 'Jun 15', venue: 'Kansas City' },
+            { date: 'Jun 15', venue: 'Santa Clara' },
+            { date: 'Jun 16', venue: 'Houston' },
+            { date: 'Jun 16', venue: 'Mexico City' },
+            { date: 'Jun 16', venue: 'Arlington' },
+            { date: 'Jun 16', venue: 'Toronto' }
+        ],
+        1: [
+            { date: 'Jun 17', venue: 'Atlanta' },
+            { date: 'Jun 17', venue: 'Inglewood' },
+            { date: 'Jun 18', venue: 'Philadelphia' },
+            { date: 'Jun 18', venue: 'Santa Clara' },
+            { date: 'Jun 19', venue: 'Kansas City' },
+            { date: 'Jun 19', venue: 'Guadalupe' },
+            { date: 'Jun 20', venue: 'Vancouver' },
+            { date: 'Jun 20', venue: 'Miami Gardens' },
+            { date: 'Jun 21', venue: 'East Rutherford' },
+            { date: 'Jun 21', venue: 'Santa Clara' },
+            { date: 'Jun 22', venue: 'Zapopan' },
+            { date: 'Jun 22', venue: 'Toronto' }
+        ],
+        2: [
+            { date: 'Jun 23', venue: 'Inglewood' },
+            { date: 'Jun 23', venue: 'Atlanta' },
+            { date: 'Jun 24', venue: 'Philadelphia' },
+            { date: 'Jun 25', venue: 'Zapopan' },
+            { date: 'Jun 26', venue: 'Arlington' },
+            { date: 'Jun 26', venue: 'East Rutherford' }
+        ],
+        3: [
+            { date: 'Jun 29', venue: 'Mexico City' },
+            { date: 'Jun 30', venue: 'East Rutherford' },
+            { date: 'Jun 30', venue: 'Houston' },
+            { date: 'Jul 1', venue: 'Miami Gardens' }
+        ],
+        4: [
+            { date: 'Jul 4', venue: 'Foxborough' },
+            { date: 'Jul 5', venue: 'Atlanta' }
+        ],
+        7: [
+            { date: 'Jul 14', venue: 'Arlington' },
+            { date: 'Jul 15', venue: 'Atlanta' }
+        ],
+        8: [
+            { date: 'Jul 19', venue: 'East Rutherford' }
+        ]
+    },
+    'repechage-bracket': {
+        1: [
+            { date: 'Jun 17', venue: 'Zapopan' },
+            { date: 'Jun 17', venue: 'Vancouver' },
+            { date: 'Jun 18', venue: 'Foxborough' },
+            { date: 'Jun 18', venue: 'Seattle' },
+            { date: 'Jun 19', venue: 'Toronto' },
+            { date: 'Jun 19', venue: 'Houston' },
+            { date: 'Jun 20', venue: 'Inglewood' },
+            { date: 'Jun 20', venue: 'Atlanta' },
+            { date: 'Jun 21', venue: 'Philadelphia' },
+            { date: 'Jun 21', venue: 'Arlington' },
+            { date: 'Jun 22', venue: 'Houston' },
+            { date: 'Jun 22', venue: 'Foxborough' }
+        ],
+        2: [
+            { date: 'Jun 23', venue: 'Mexico City' },
+            { date: 'Jun 23', venue: 'Seattle' },
+            { date: 'Jun 24', venue: 'Miami Gardens' },
+            { date: 'Jun 24', venue: 'Santa Clara' },
+            { date: 'Jun 24', venue: 'Guadalupe' },
+            { date: 'Jun 25', venue: 'Kansas City' },
+            { date: 'Jun 25', venue: 'Vancouver' },
+            { date: 'Jun 25', venue: 'Houston' },
+            { date: 'Jun 26', venue: 'Foxborough' },
+            { date: 'Jun 26', venue: 'Inglewood' },
+            { date: 'Jun 26', venue: 'Atlanta' },
+            { date: 'Jun 26', venue: 'Philadelphia' }
+        ],
+        3: [
+            { date: 'Jun 29', venue: 'Santa Clara' },
+            { date: 'Jun 29', venue: 'Zapopan' },
+            { date: 'Jun 29', venue: 'Atlanta' },
+            { date: 'Jun 30', venue: 'Vancouver' },
+            { date: 'Jun 30', venue: 'Arlington' },
+            { date: 'Jul 1', venue: 'Kansas City' },
+            { date: 'Jul 1', venue: 'Inglewood' },
+            { date: 'Jul 1', venue: 'Toronto' }
+        ],
+        4: [
+            { date: 'Jul 3', venue: 'Seattle' },
+            { date: 'Jul 3', venue: 'Mexico City' },
+            { date: 'Jul 4', venue: 'Vancouver' },
+            { date: 'Jul 4', venue: 'Kansas City' },
+            { date: 'Jul 4', venue: 'Arlington' },
+            { date: 'Jul 5', venue: 'East Rutherford' }
+        ],
+        5: [
+            { date: 'Jul 6', venue: 'Santa Clara' },
+            { date: 'Jul 7', venue: 'Foxborough' },
+            { date: 'Jul 7', venue: 'Houston' },
+            { date: 'Jul 8', venue: 'Miami Gardens' }
+        ],
+        6: [
+            { date: 'Jul 10', venue: 'Inglewood' },
+            { date: 'Jul 11', venue: 'Kansas City' },
+        ],
+        8: [
+            { date: 'Jul 18', venue: 'Miami Gardens' }
+        ]
+    }
+};
+
 // Generates the raw HTML structure for a match
 function createMatchHTML() {
     return `
@@ -100,6 +231,9 @@ function createMatchHTML() {
                 <div class="flag"></div>
                 <div class="code">---</div>
                 <div class="score">-</div>
+            </div>
+            <div class="match-meta">
+                <span class="date">[Date]</span> &bull; <span class="venue">[Venue]</span>
             </div>
         </div>
     `;
@@ -150,20 +284,58 @@ function updateMatchData(matchElement, score1, score2) {
 
         if (s1 > s2 || (s1==s2 && Math.random()<0.5)) {
             teams[0].classList.add('advanced');
-            if (matchElement.getAttribute('data-bracket') === 'main-bracket') teams[1].classList.add('demoted');
+            if (matchElement.getAttribute('data-bracket') === 'main-bracket') {
+                if (round < 8) teams[1].classList.add('demoted');
+                else teams[1].classList.add('eliminated');
+            }
             else {
                 teams[1].classList.add('eliminated');
                 newTeamlist.splice(newTeamlist.indexOf(newTeamlist.find(team => team.code === teams[1].querySelector('.code').innerText)), 1);
             }
         } else {
             teams[1].classList.add('advanced');
-            if (matchElement.getAttribute('data-bracket') === 'main-bracket') teams[0].classList.add('demoted');
+            if (matchElement.getAttribute('data-bracket') === 'main-bracket') {
+                if (round < 8) teams[0].classList.add('demoted');
+                else teams[0].classList.add('eliminated');
+            }
             else {
                 teams[0].classList.add('eliminated');
                 newTeamlist.splice(newTeamlist.indexOf(newTeamlist.find(team => team.code === teams[0].querySelector('.code').innerText)), 1);
             }
         }
     }
+}
+
+// --- STANDALONE META INJECTION FUNCTION ---
+function injectMatchMeta() {
+    const allMatches = document.querySelectorAll('.match');
+
+    allMatches.forEach(matchEl => {
+        const bracketId = matchEl.getAttribute('data-bracket');
+        const roundIdx = parseInt(matchEl.getAttribute('data-round')) || 0;
+        const matchIdx = parseInt(matchEl.getAttribute('data-match')) || 0;
+
+        let metaText = '';
+
+        // Retrieve exact 1:1 match metadata if defined
+        if (GAME_SCHEDULE[bracketId]?.[roundIdx]?.[matchIdx]) {
+            const info = GAME_SCHEDULE[bracketId][roundIdx][matchIdx];
+            metaText = `${info.date} | ${info.venue}`;
+        } else {
+            // Fallback unique 1:1 template if a specific game isn't explicitly listed above
+            metaText = `ROUND ${roundIdx + 1} GAME ${matchIdx + 1} | TBD VENUE`;
+        }
+
+        // Find existing meta element or create one
+        let metaEl = matchEl.querySelector('.match-meta');
+        if (!metaEl) {
+            metaEl = document.createElement('div');
+            metaEl.className = 'match-meta';
+            matchEl.appendChild(metaEl);
+        }
+
+        metaEl.innerText = metaText;
+    });
 }
 
 function renderBracket(config) {
@@ -209,6 +381,149 @@ function getMatchElement(bracketId, roundIndex, matchIndex) {
     return document.querySelector(selector);
 }
 
+// --- DYNAMICALLY GENERATED CONNECTING LINES ---
+function drawDynamicConnections() {
+    const svg = document.getElementById('connections-svg');
+    const scroller = document.getElementById('bracket-scroller');
+    if (!svg || !scroller) return;
+
+    svg.innerHTML = ''; // Clear existing lines
+
+    // Expand SVG canvas to cover full scrollable area
+    const fullWidth = Math.max(scroller.scrollWidth, scroller.clientWidth);
+    const fullHeight = Math.max(scroller.scrollHeight, scroller.clientHeight);
+    svg.setAttribute('width', fullWidth);
+    svg.setAttribute('height', fullHeight);
+
+    const scrollerRect = scroller.getBoundingClientRect();
+    const allMatches = document.querySelectorAll('.match');
+
+    allMatches.forEach(fromMatch => {
+        const bracketId = fromMatch.getAttribute('data-bracket');
+        const roundIdx = parseInt(fromMatch.getAttribute('data-round'));
+
+        // --- 1. ADVANCING / PROMOTED TEAMS ---
+        const advancingTeam = fromMatch.querySelector('.team.advanced, .team.promoted');
+        if (advancingTeam) {
+            const teamCode = advancingTeam.querySelector('.code')?.innerText;
+            if (teamCode && teamCode !== '---') {
+                let targetTeamEl = null;
+                let targetMatchEl = null;
+
+                // Search for team in future rounds
+                for (let r = roundIdx + 1; r <= 8; r++) {
+                    const candidateMatches = document.querySelectorAll(`.match[data-round="${r}"]`);
+                    candidateMatches.forEach(candidate => {
+                        const teams = candidate.querySelectorAll('.team');
+                        teams.forEach(team => {
+                            if (team.querySelector('.code')?.innerText === teamCode) {
+                                targetTeamEl = team;
+                                targetMatchEl = candidate;
+                            }
+                        });
+                    });
+                    if (targetMatchEl) break;
+                }
+
+                if (targetTeamEl && targetMatchEl) {
+                    const targetBracketId = targetMatchEl.getAttribute('data-bracket');
+
+                    const rFromTeam = advancingTeam.getBoundingClientRect();
+                    const rToSlot = targetTeamEl.getBoundingClientRect();
+
+                    const x1 = (rFromTeam.right - scrollerRect.left) + scroller.scrollLeft;
+                    const y1 = (rFromTeam.top + rFromTeam.height / 2 - scrollerRect.top) + scroller.scrollTop;
+
+                    const x2 = (rToSlot.left - scrollerRect.left) + scroller.scrollLeft;
+                    const y2 = (rToSlot.top + rToSlot.height / 2 - scrollerRect.top) + scroller.scrollTop;
+
+                    const isCrossBracket = bracketId !== targetBracketId;
+
+                    if (isCrossBracket) {
+                        const r = 10;
+                        const lead = 5;
+
+                        // Origin stub: Exits right and curves UPWARD fast
+                        const path1Data = `M ${x1} ${y1} h ${lead} a ${r} ${r} 0 0 0 ${r} -${r}`;
+                        
+                        // Target stub: Comes from below and curves RIGHT into center of slot
+                        const path2Data = `M ${x2 - (lead + r)} ${y2 + r} a ${r} ${r} 0 0 1 ${r} -${r} h ${lead}`;
+
+                        svg.appendChild(createSvgPath(path1Data, '#0066ff'));
+                        svg.appendChild(createSvgPath(path2Data, '#0066ff'));
+                    } else {
+                        // Standard cubic bezier curve within same bracket
+                        const dx = Math.max((x2 - x1) / 2, 10);
+                        const pathData = `M ${x1} ${y1} C ${x1 + dx} ${y1}, ${x2 - dx} ${y2}, ${x2} ${y2}`;
+                        svg.appendChild(createSvgPath(pathData, '#2e7d32'));
+                    }
+                }
+            }
+        }
+
+        // --- 2. DEMOTED TEAMS (MAIN & REPECHAGE BRACKETS) ---
+        const demotedTeams = fromMatch.querySelectorAll('.team.demoted');
+        demotedTeams.forEach(demotedTeam => {
+            const teamCode = demotedTeam.querySelector('.code')?.innerText;
+            if (!teamCode || teamCode === '---') return;
+
+            const rDemoted = demotedTeam.getBoundingClientRect();
+
+            // Origin coordinates (Center-right edge of demoted team slot)
+            const x1 = (rDemoted.right - scrollerRect.left) + scroller.scrollLeft;
+            const y1 = (rDemoted.top + rDemoted.height / 2 - scrollerRect.top) + scroller.scrollTop;
+
+            const r = 10;
+            const lead = 5;
+
+            // Outgoing demotion stub: Exits right and curves DOWNWARD
+            const outgoingDemotionPath = `M ${x1} ${y1} h ${lead} a ${r} ${r} 0 0 1 ${r} ${r}`;
+            svg.appendChild(createSvgPath(outgoingDemotionPath, '#ff7b00'));
+
+            // Search for where this demoted team lands in repechage
+            let targetTeamEl = null;
+            let targetMatchEl = null;
+
+            for (let rIdx = roundIdx; rIdx <= 8; rIdx++) {
+                const candidateMatches = document.querySelectorAll(`.match[data-round="${rIdx}"]`);
+                candidateMatches.forEach(candidate => {
+                    if (candidate === fromMatch) return; // Ignore origin match
+                    const teams = candidate.querySelectorAll('.team');
+                    teams.forEach(team => {
+                        if (team.querySelector('.code')?.innerText === teamCode) {
+                            targetTeamEl = team;
+                            targetMatchEl = candidate;
+                        }
+                    });
+                });
+                if (targetMatchEl) break;
+            }
+
+            // Draw incoming demotion stub if destination slot exists
+            if (targetTeamEl && targetMatchEl) {
+                const rToSlot = targetTeamEl.getBoundingClientRect();
+                const x2 = (rToSlot.left - scrollerRect.left) + scroller.scrollLeft;
+                const y2 = (rToSlot.top + rToSlot.height / 2 - scrollerRect.top) + scroller.scrollTop;
+
+                // Incoming demotion stub: Comes from ABOVE and curves RIGHT into team center
+                const incomingDemotionPath = `M ${x2 - (lead + r)} ${y2 - r} a ${r} ${r} 0 0 0 ${r} ${r} h ${lead}`;
+                svg.appendChild(createSvgPath(incomingDemotionPath, '#ff7b00'));
+            }
+        });
+    });
+}
+
+// Helper to construct SVG paths
+function createSvgPath(d, strokeColor) {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('stroke', strokeColor);
+    path.setAttribute('stroke-width', '2');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-dasharray', '4 2');
+    return path;
+}
+
 function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -238,7 +553,12 @@ function initGUI() {
     newTeamlist = teamlist.slice();
     renderBracket(mainBracketConfig);
     renderBracket(repechageBracketConfig);
+    injectMatchMeta(); //add match info
     round = 0;
+    
+    // Clear lines on reset
+    const svg = document.getElementById('connections-svg');
+    if (svg) svg.innerHTML = '';
 }
 
 function nextRound() {
@@ -251,9 +571,29 @@ function nextRound() {
         var team2code = teams[1].querySelector('.code').innerText;
         var team2elo = teamlist.find(team => team.code === team2code).elo;
 
-        var t1GoalsMean = 1.3 * Math.exp((team1elo-team2elo)/400);
-        var t2GoalsMean = 1.3 * Math.exp((team2elo-team1elo)/400);
-        updateMatchData(match, poisson(t1GoalsMean), poisson(t2GoalsMean));
+        var t1GoalsMean = poisson(1.3 * Math.exp((team1elo-team2elo)/400));
+        var t2GoalsMean = poisson(1.3 * Math.exp((team2elo-team1elo)/400));
+        // to avoid unrealistic landslides, any score difference above 4 is trimmed off
+        var tooManyGoals = Math.abs(t1GoalsMean - t2GoalsMean) - 4;
+        if (tooManyGoals > 0) {
+            if (t1GoalsMean>t2GoalsMean) {
+                t1GoalsMean = t2GoalsMean + 4;
+                while (Math.random()>0.5 && tooManyGoals > 0) {
+                    console.log(team1code, team2code);
+                    t1GoalsMean ++;
+                    tooManyGoals --;
+                }
+            }
+            else {
+                t2GoalsMean = t1GoalsMean + 4;
+                while (Math.random()>0.5 && tooManyGoals > 0) {
+                    console.log(team1code, team2code);
+                    t2GoalsMean ++;
+                    tooManyGoals --;
+                }
+            }
+        }
+        updateMatchData(match, t1GoalsMean, t2GoalsMean);
     }
     for (let i=0; i<repechageBracketConfig.rounds[round].teams/2; i++) {
         var match = getMatchElement('repechage-bracket', round, i);
@@ -563,19 +903,29 @@ function nextRound() {
 
     teamlist = newTeamlist.slice();
     round += 1;
+
+    // Draw lines dynamically for all advancing teams up to this point
+    setTimeout(() => {
+        drawDynamicConnections();
+    }, 50);
 }
 
 // --- Event Listeners ---
 document.getElementById('btn-draw').addEventListener('click', () => {
     console.log('Draw triggered');
-    shuffleArray(pot1);
+    
+    var pot1fixed = pot1.slice();
+    pot1fixed.splice(0,3); //remove USA, MEX, CAN
+    shuffleArray(pot1fixed);
+    pot1fixed.splice(0,0, pot1[1], pot1[0]); //re-add MEX, USA
+    pot1fixed.splice(3,0, pot1[2]); //re-add CAN
     shuffleArray(pot2);
     shuffleArray(pot3);
     shuffleArray(pot4);
 
     for (let i=0; i<12; i++) {
         var matchDrawn1v4 = getMatchElement('main-bracket', 0, 2*i);
-        drawMatch(matchDrawn1v4, { code: pot1[i].code, flagCode: pot1[i].flagCode }, { code: pot4[i].code, flagCode: pot4[i].flagCode });
+        drawMatch(matchDrawn1v4, { code: pot1fixed[i].code, flagCode: pot1fixed[i].flagCode }, { code: pot4[i].code, flagCode: pot4[i].flagCode });
         var matchDrawn2v3 = getMatchElement('main-bracket', 0, 2*i+1);
         drawMatch(matchDrawn2v3, { code: pot2[i].code, flagCode: pot2[i].flagCode }, { code: pot3[i].code, flagCode: pot3[i].flagCode });
     }
@@ -595,6 +945,10 @@ document.getElementById('btn-simulate').addEventListener('click', () => {
 document.getElementById('btn-reset').addEventListener('click', () => {
     console.log('Reset triggered');
     initGUI();
+});
+
+window.addEventListener('resize', () => {
+    drawDynamicConnections();
 });
 
 // Run on load
