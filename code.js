@@ -116,18 +116,18 @@ const GAME_SCHEDULE = {
             { date: 'Jun 16', venue: 'Toronto' }
         ],
         1: [
-            { date: 'Jun 17', venue: 'Atlanta' },
-            { date: 'Jun 17', venue: 'Inglewood' },
-            { date: 'Jun 18', venue: 'Philadelphia' },
-            { date: 'Jun 18', venue: 'Santa Clara' },
-            { date: 'Jun 19', venue: 'Kansas City' },
-            { date: 'Jun 19', venue: 'Guadalupe' },
-            { date: 'Jun 20', venue: 'Vancouver' },
-            { date: 'Jun 20', venue: 'Miami Gardens' },
-            { date: 'Jun 21', venue: 'East Rutherford' },
-            { date: 'Jun 21', venue: 'Santa Clara' },
-            { date: 'Jun 22', venue: 'Zapopan' },
-            { date: 'Jun 22', venue: 'Toronto' }
+            { date: 'Jun 17', venue: 'Zapopan' },
+            { date: 'Jun 17', venue: 'Vancouver' },
+            { date: 'Jun 18', venue: 'Foxborough' },
+            { date: 'Jun 18', venue: 'Seattle' },
+            { date: 'Jun 19', venue: 'Toronto' },
+            { date: 'Jun 19', venue: 'Houston' },
+            { date: 'Jun 20', venue: 'Inglewood' },
+            { date: 'Jun 20', venue: 'Atlanta' },
+            { date: 'Jun 21', venue: 'Philadelphia' },
+            { date: 'Jun 21', venue: 'Arlington' },
+            { date: 'Jun 22', venue: 'Houston' },
+            { date: 'Jun 22', venue: 'Foxborough' }
         ],
         2: [
             { date: 'Jun 23', venue: 'Inglewood' },
@@ -157,18 +157,18 @@ const GAME_SCHEDULE = {
     },
     'repechage-bracket': {
         1: [
-            { date: 'Jun 17', venue: 'Zapopan' },
-            { date: 'Jun 17', venue: 'Vancouver' },
-            { date: 'Jun 18', venue: 'Foxborough' },
-            { date: 'Jun 18', venue: 'Seattle' },
-            { date: 'Jun 19', venue: 'Toronto' },
-            { date: 'Jun 19', venue: 'Houston' },
-            { date: 'Jun 20', venue: 'Inglewood' },
-            { date: 'Jun 20', venue: 'Atlanta' },
-            { date: 'Jun 21', venue: 'Philadelphia' },
-            { date: 'Jun 21', venue: 'Arlington' },
-            { date: 'Jun 22', venue: 'Houston' },
-            { date: 'Jun 22', venue: 'Foxborough' }
+            { date: 'Jun 17', venue: 'Atlanta' },
+            { date: 'Jun 17', venue: 'Inglewood' },
+            { date: 'Jun 18', venue: 'Philadelphia' },
+            { date: 'Jun 18', venue: 'Santa Clara' },
+            { date: 'Jun 19', venue: 'Kansas City' },
+            { date: 'Jun 19', venue: 'Guadalupe' },
+            { date: 'Jun 20', venue: 'Vancouver' },
+            { date: 'Jun 20', venue: 'Miami Gardens' },
+            { date: 'Jun 21', venue: 'East Rutherford' },
+            { date: 'Jun 21', venue: 'Santa Clara' },
+            { date: 'Jun 22', venue: 'Zapopan' },
+            { date: 'Jun 22', venue: 'Toronto' }
         ],
         2: [
             { date: 'Jun 23', venue: 'Mexico City' },
@@ -917,8 +917,8 @@ document.getElementById('btn-draw').addEventListener('click', () => {
     var pot1fixed = pot1.slice();
     pot1fixed.splice(0,3); //remove USA, MEX, CAN
     shuffleArray(pot1fixed);
-    pot1fixed.splice(0,0, pot1[1], pot1[0]); //re-add MEX, USA
-    pot1fixed.splice(3,0, pot1[2]); //re-add CAN
+    pot1fixed.splice(0,0, pot1[1], pot1[2]); //re-add MEX, CAN
+    pot1fixed.splice(3,0, pot1[0]); //re-add USA
     shuffleArray(pot2);
     shuffleArray(pot3);
     shuffleArray(pot4);
