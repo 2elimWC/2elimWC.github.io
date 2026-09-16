@@ -57,6 +57,11 @@ const pot4 = [
 var teamlist = pot1.concat(pot2, pot3, pot4);
 var newTeamlist = teamlist.slice();
 
+var pot1custom = [];
+var pot2custom = [];
+var pot3custom = [];
+var pot4custom = [];
+
 const mainBracketConfig = {
     id: 'main-bracket',
     rounds: [
@@ -549,11 +554,20 @@ function poisson(lambda) {
 var round = 0;
 
 function initGUI() {
-    teamlist = pot1.concat(pot2, pot3, pot4);
-    newTeamlist = teamlist.slice();
+    if ((document.getElementById('mode-2026').classList.contains('active'))) {
+        teamlist = pot1.concat(pot2, pot3, pot4);
+        newTeamlist = teamlist.slice();
+    } else {
+        teamlist = pot1custom.concat(pot2custom, pot3custom, pot4custom);
+        newTeamlist = teamlist.slice();
+    }
     renderBracket(mainBracketConfig);
     renderBracket(repechageBracketConfig);
     injectMatchMeta(); //add match info
+    document.getElementById("btn-draw").disabled = false
+    document.getElementById("btn-next").disabled = true
+    document.getElementById("btn-simulate").disabled = true
+    document.getElementById("btn-reset").disabled = true
     round = 0;
     
     // Clear lines on reset
@@ -562,6 +576,9 @@ function initGUI() {
 }
 
 function nextRound() {
+    //disable new draw
+    document.getElementById("btn-draw").disabled = true
+
     // decide game results for both brackets
     for (let i=0; i<mainBracketConfig.rounds[round].teams/2; i++) {
         var match = getMatchElement('main-bracket', round, i);
@@ -913,22 +930,38 @@ function nextRound() {
 // --- Event Listeners ---
 document.getElementById('btn-draw').addEventListener('click', () => {
     console.log('Draw triggered');
-    
-    var pot1fixed = pot1.slice();
-    pot1fixed.splice(0,3); //remove USA, MEX, CAN
-    shuffleArray(pot1fixed);
-    pot1fixed.splice(0,0, pot1[1], pot1[2]); //re-add MEX, CAN
-    pot1fixed.splice(3,0, pot1[0]); //re-add USA
-    shuffleArray(pot2);
-    shuffleArray(pot3);
-    shuffleArray(pot4);
 
-    for (let i=0; i<12; i++) {
-        var matchDrawn1v4 = getMatchElement('main-bracket', 0, 2*i);
-        drawMatch(matchDrawn1v4, { code: pot1fixed[i].code, flagCode: pot1fixed[i].flagCode }, { code: pot4[i].code, flagCode: pot4[i].flagCode });
-        var matchDrawn2v3 = getMatchElement('main-bracket', 0, 2*i+1);
-        drawMatch(matchDrawn2v3, { code: pot2[i].code, flagCode: pot2[i].flagCode }, { code: pot3[i].code, flagCode: pot3[i].flagCode });
+    if (document.getElementById('mode-2026').classList.contains('active')) {
+        var pot1fixed = pot1.slice();
+        pot1fixed.splice(0,3); //remove USA, MEX, CAN
+        shuffleArray(pot1fixed);
+        pot1fixed.splice(0,0, pot1[1], pot1[2]); //re-add MEX, CAN
+        pot1fixed.splice(3,0, pot1[0]); //re-add USA
+        shuffleArray(pot2);
+        shuffleArray(pot3);
+        shuffleArray(pot4);
+        for (let i=0; i<12; i++) {
+            var matchDrawn1v4 = getMatchElement('main-bracket', 0, 2*i);
+            drawMatch(matchDrawn1v4, { code: pot1fixed[i].code, flagCode: pot1fixed[i].flagCode }, { code: pot4[i].code, flagCode: pot4[i].flagCode });
+            var matchDrawn2v3 = getMatchElement('main-bracket', 0, 2*i+1);
+            drawMatch(matchDrawn2v3, { code: pot2[i].code, flagCode: pot2[i].flagCode }, { code: pot3[i].code, flagCode: pot3[i].flagCode });
+        }
+    } else {
+        shuffleArray(pot1custom);
+        shuffleArray(pot2custom);
+        shuffleArray(pot3custom);
+        shuffleArray(pot4custom);
+        for (let i=0; i<12; i++) {
+            var matchDrawn1v4 = getMatchElement('main-bracket', 0, 2*i);
+            drawMatch(matchDrawn1v4, { code: pot1custom[i].code, flagCode: pot1custom[i].flagCode }, { code: pot4custom[i].code, flagCode: pot4custom[i].flagCode });
+            var matchDrawn2v3 = getMatchElement('main-bracket', 0, 2*i+1);
+            drawMatch(matchDrawn2v3, { code: pot2custom[i].code, flagCode: pot2custom[i].flagCode }, { code: pot3custom[i].code, flagCode: pot3custom[i].flagCode });
+        }
     }
+
+    document.getElementById("btn-next").disabled = false
+    document.getElementById("btn-simulate").disabled = false
+    document.getElementById("btn-reset").disabled = false
 });
 
 document.getElementById('btn-next').addEventListener('click', () => {
@@ -949,6 +982,263 @@ document.getElementById('btn-reset').addEventListener('click', () => {
 
 window.addEventListener('resize', () => {
     drawDynamicConnections();
+});
+
+// --- CONFEDERATION DEFINITIONS & QUOTAS ---
+const CONFEDERATIONS = {
+    UEFA: { name: 'UEFA', min: 15, max: 18 },
+    CONMEBOL: { name: 'CONMEBOL', min: 6, max: 7 },
+    CONCACAF: { name: 'CONCACAF', min: 5, max: 7 },
+    CAF: { name: 'CAF', min: 9, max: 10 },
+    AFC: { name: 'AFC', min: 8, max: 9 },
+    OFC: { name: 'OFC', min: 1, max: 2 }
+};
+
+// Map team code to confederation
+const TEAM_CONFEDERATIONS = {
+    USA: 'CONCACAF', MEX: 'CONCACAF', CAN: 'CONCACAF', PAN: 'CONCACAF', CUW: 'CONCACAF', HAI: 'CONCACAF',
+    CRC: 'CONCACAF', HON: 'CONCACAF', JAM: 'CONCACAF', GUA: 'CONCACAF',
+    ESP: 'UEFA', FRA: 'UEFA', ENG: 'UEFA', POR: 'UEFA', NED: 'UEFA', BEL: 'UEFA', GER: 'UEFA', CRO: 'UEFA',
+    SUI: 'UEFA', AUT: 'UEFA', NOR: 'UEFA', SCO: 'UEFA', SWE: 'UEFA', TUR: 'UEFA', DEN: 'UEFA', ITA: 'UEFA',
+    UKR: 'UEFA', RUS: 'UEFA', GRE: 'UEFA', SRB: 'UEFA', KVX: 'UEFA', HUN: 'UEFA', POL: 'UEFA', IRL: 'UEFA',
+    ARG: 'CONMEBOL', BRA: 'CONMEBOL', COL: 'CONMEBOL', URU: 'CONMEBOL', ECU: 'CONMEBOL', PAR: 'CONMEBOL',
+    VEN: 'CONMEBOL', CHI: 'CONMEBOL', PER: 'CONMEBOL', BOL: 'CONMEBOL',
+    MAR: 'CAF', SEN: 'CAF', EGY: 'CAF', ALG: 'CAF', TUN: 'CAF', CIV: 'CAF', RSA: 'CAF', CPV: 'CAF', GHA: 'CAF', COD: 'CAF',
+    NGA: 'CAF', CMR: 'CAF', MLI: 'CAF', ANG: 'CAF',
+    JPN: 'AFC', IRN: 'AFC', KOR: 'AFC', AUS: 'AFC', UZB: 'AFC', QAT: 'AFC', KSA: 'AFC', JOR: 'AFC', IRQ: 'AFC',
+    UAE: 'AFC', SYR: 'AFC', OMA: 'AFC', PLE: 'AFC',
+    NZL: 'OFC', NCL: 'OFC', TAH: 'OFC'
+};
+
+let selectedCustomTeams = [];
+
+const countryPool = [
+    { code: 'ESP', elo: 2259, ranking: 1, flagCode: 'es', GD: 0 },
+    { code: 'ENG', elo: 2125, ranking: 4, flagCode: 'gb-eng', GD: 0 },
+    { code: 'FRA', elo: 2070, ranking: 3, flagCode: 'fr', GD: 0 },
+    { code: 'POR', elo: 1995, ranking: 7, flagCode: 'pt', GD: 0 },
+    { code: 'NED', elo: 1970, ranking: 9, flagCode: 'nl', GD: 0 },
+    { code: 'NOR', elo: 1952, ranking: 19, flagCode: 'no', GD: 0 },
+    { code: 'BEL', elo: 1947, ranking: 8, flagCode: 'be', GD: 0 },
+    { code: 'SUI', elo: 1928, ranking: 14, flagCode: 'ch', GD: 0 },
+    { code: 'GER', elo: 1907, ranking: 12, flagCode: 'de', GD: 0 },
+    { code: 'CRO', elo: 1881, ranking: 13, flagCode: 'hr', GD: 0 },
+    { code: 'DEN', elo: 1869, ranking: 21, flagCode: 'dk', GD: 0 },
+    { code: 'ITA', elo: 1869, ranking: 15, flagCode: 'it', GD: 0 },
+    { code: 'TUR', elo: 1852, ranking: 27, flagCode: 'tr', GD: 0 },
+    { code: 'AUT', elo: 1821, ranking: 23, flagCode: 'at', GD: 0 },
+    { code: 'UKR', elo: 1780, ranking: 33, flagCode: 'ua', GD: 0 },
+    { code: 'RUS', elo: 1772, ranking: 35, flagCode: 'ru', GD: 0 },
+    
+    { code: 'ARG', elo: 2173, ranking: 2, flagCode: 'ar', GD: 0 },
+    { code: 'COL', elo: 2003, ranking: 11, flagCode: 'co', GD: 0 },
+    { code: 'BRA', elo: 1993, ranking: 5, flagCode: 'br', GD: 0 },
+    { code: 'ECU', elo: 1871, ranking: 25, flagCode: 'ec', GD: 0 },
+    { code: 'URU', elo: 1841, ranking: 20, flagCode: 'uy', GD: 0 },
+    { code: 'PAR', elo: 1814, ranking: 34, flagCode: 'py', GD: 0 },
+
+    { code: 'MEX', elo: 1913, ranking: 10, flagCode: 'mx', GD: 0 },
+    { code: 'USA', elo: 1746, ranking: 16, flagCode: 'us', GD: 0 },
+    { code: 'CAN', elo: 1729, ranking: 30, flagCode: 'ca', GD: 0 },
+    { code: 'PAN', elo: 1658, ranking: 44, flagCode: 'pa', GD: 0 },
+    { code: 'CRC', elo: 1609, ranking: 51, flagCode: 'cr', GD: 0 },
+    { code: 'HON', elo: 1570, ranking: 66, flagCode: 'hn', GD: 0 },
+
+    { code: 'MAR', elo: 1901, ranking: 6, flagCode: 'ma', GD: 0 },
+    { code: 'SEN', elo: 1816, ranking: 18, flagCode: 'sn', GD: 0 },
+    { code: 'NGA', elo: 1767, ranking: 26, flagCode: 'ng', GD: 0 },
+    { code: 'ALG', elo: 1756, ranking: 29, flagCode: 'dz', GD: 0 },
+    { code: 'EGY', elo: 1742, ranking: 24, flagCode: 'eg', GD: 0 },
+    { code: 'CIV', elo: 1728, ranking: 31, flagCode: 'ci', GD: 0 },
+    { code: 'COD', elo: 1704, ranking: 41, flagCode: 'cd', GD: 0 },
+    { code: 'CPV', elo: 1619, ranking: 64, flagCode: 'cv', GD: 0 },
+    { code: 'CMR', elo: 1614, ranking: 43, flagCode: 'cm', GD: 0 },
+    { code: 'MLI', elo: 1588, ranking: 53, flagCode: 'ml', GD: 0 },
+
+    { code: 'JPN', elo: 1888, ranking: 17, flagCode: 'jp', GD: 0 },
+    { code: 'AUS', elo: 1794, ranking: 28, flagCode: 'au', GD: 0 },
+    { code: 'IRN', elo: 1764, ranking: 22, flagCode: 'ir', GD: 0 },
+    { code: 'KOR', elo: 1723, ranking: 32, flagCode: 'kr', GD: 0 },
+    { code: 'UZB', elo: 1631, ranking: 60, flagCode: 'uz', GD: 0 },
+    { code: 'JOR', elo: 1628, ranking: 73, flagCode: 'jo', GD: 0 },
+    { code: 'KSA', elo: 1596, ranking: 58, flagCode: 'sa', GD: 0 },
+    { code: 'IRQ', elo: 1561, ranking: 63, flagCode: 'iq', GD: 0 },
+    { code: 'UAE', elo: 1540, ranking: 68, flagCode: 'ae', GD: 0 },
+    
+    { code: 'NZL', elo: 1562, ranking: 86, flagCode: 'nz', GD: 0 },
+    
+    //not selected by default
+    { code: 'SCO', elo: 1745, ranking: 42, flagCode: 'gb-sct', GD: 0 },
+    { code: 'GRE', elo: 1744, ranking: 46, flagCode: 'gr', GD: 0 },
+    { code: 'SRB', elo: 1734, ranking: 40, flagCode: 'rs', GD: 0 },
+    { code: 'SWE', elo: 1731, ranking: 37, flagCode: 'se', GD: 0 },
+    { code: 'KVX', elo: 1714, ranking: 78, flagCode: 'xk', GD: 0 },
+    { code: 'HUN', elo: 1710, ranking: 39, flagCode: 'hu', GD: 0 },
+    { code: 'POL', elo: 1710, ranking: 36, flagCode: 'pl', GD: 0 },
+    { code: 'IRL', elo: 1699, ranking: 55, flagCode: 'ie', GD: 0 },
+    
+    { code: 'VEN', elo: 1733, ranking: 47, flagCode: 've', GD: 0 },
+    { code: 'CHI', elo: 1717, ranking: 49, flagCode: 'cl', GD: 0 },
+    { code: 'PER', elo: 1700, ranking: 50, flagCode: 'pe', GD: 0 },
+    { code: 'BOL', elo: 1621, ranking: 77, flagCode: 'bo', GD: 0 },
+    
+    { code: 'JAM', elo: 1527, ranking: 71, flagCode: 'jm', GD: 0 },
+    { code: 'HAI', elo: 1517, ranking: 88, flagCode: 'ht', GD: 0 },
+    { code: 'GUA', elo: 1504, ranking: 97, flagCode: 'gt', GD: 0 },
+    { code: 'CUW', elo: 1438, ranking: 82, flagCode: 'cw', GD: 0 },
+    
+    { code: 'GHA', elo: 1571, ranking: 65, flagCode: 'gh', GD: 0 },
+    { code: 'TUN', elo: 1562, ranking: 57, flagCode: 'tn', GD: 0 },
+    { code: 'RSA', elo: 1560, ranking: 54, flagCode: 'za', GD: 0 },
+    { code: 'ANG', elo: 1543, ranking: 87, flagCode: 'ao', GD: 0 },
+    
+    { code: 'SYR', elo: 1479, ranking: 83, flagCode: 'sy', GD: 0 },
+    { code: 'OMA', elo: 1479, ranking: 79, flagCode: 'om', GD: 0 },
+    { code: 'PLE', elo: 1465, ranking: 95, flagCode: 'ps', GD: 0 },
+    
+    { code: 'NCL', elo: 1287, ranking: 151, flagCode: 'nc', GD: 0 },
+    { code: 'TAH', elo: 1177, ranking: 157, flagCode: 'pf', GD: 0 },
+];
+
+// Get counts per confederation for selected teams
+function getConfedCounts() {
+    const counts = { UEFA: 0, CONMEBOL: 0, CONCACAF: 0, CAF: 0, AFC: 0, OFC: 0 };
+    selectedCustomTeams.forEach(code => {
+        const confed = TEAM_CONFEDERATIONS[code] || 'UEFA';
+        counts[confed] = (counts[confed] || 0) + 1;
+    });
+    return counts;
+}
+
+// Build and open modal window
+function openCustomModal() {
+    const grid = document.getElementById('modal-country-grid');
+    grid.innerHTML = '';
+    selectedCustomTeams = countryPool.slice();
+    selectedCustomTeams.splice(48,25);
+    selectedCustomTeams = selectedCustomTeams.map(t => t.code);
+
+    // Group teams by Confederation
+    Object.keys(CONFEDERATIONS).forEach(confedKey => {
+        const confedTeams = countryPool.filter(t => TEAM_CONFEDERATIONS[t.code] === confedKey);
+        if (confedTeams.length === 0) return;
+
+        // Group Header
+        const sectionHeader = document.createElement('div');
+        sectionHeader.className = 'confed-header';
+        sectionHeader.setAttribute('data-confed', confedKey);
+        grid.appendChild(sectionHeader);
+
+        // Group Container
+        const groupContainer = document.createElement('div');
+        groupContainer.className = 'confed-group';
+
+        confedTeams.forEach(team => {
+            const chip = document.createElement('div');
+            chip.className = `country-chip ${selectedCustomTeams.includes(team.code) ? 'selected' : ''}`;
+            chip.setAttribute('data-code', team.code);
+            chip.innerHTML = `
+                <span class="flag" style="background-image: url('https://flagcdn.com/w40/${team.flagCode}.png'); background-size: cover;"></span>
+                <span>${team.code}</span>
+            `;
+
+            // Freely toggle selection without blocking
+            chip.addEventListener('click', () => {
+                if (selectedCustomTeams.includes(team.code)) {
+                    selectedCustomTeams = selectedCustomTeams.filter(c => c !== team.code);
+                    chip.classList.remove('selected');
+                } else {
+                    selectedCustomTeams.push(team.code);
+                    chip.classList.add('selected');
+                }
+                updateModalStatus();
+            });
+
+            groupContainer.appendChild(chip);
+        });
+
+        grid.appendChild(groupContainer);
+    });
+
+    updateModalStatus();
+    document.getElementById('custom-modal').classList.add('open');
+}
+
+// Update counters, labels, and apply button state
+function updateModalStatus() {
+    const counts = getConfedCounts();
+    const totalSelected = selectedCustomTeams.length;
+
+    // Update Confederation section titles with quotas
+    Object.keys(CONFEDERATIONS).forEach(confedKey => {
+        const confedHeader = document.querySelector(`.confed-header[data-confed="${confedKey}"]`);
+        if (confedHeader) {
+            const conf = CONFEDERATIONS[confedKey];
+            const current = counts[confedKey] || 0;
+            const isValid = current >= conf.min && current <= conf.max;
+            confedHeader.innerHTML = `
+                <span>${conf.name}</span>
+                <span class="confed-badge ${isValid ? 'valid' : 'invalid'}">${current} / [${conf.min}-${conf.max}]</span>
+            `;
+        }
+    });
+
+    // Update total counter
+    const counterEl = document.getElementById('selected-count');
+    if (counterEl) {
+        counterEl.innerText = `${totalSelected} / 48`;
+        counterEl.style.color = totalSelected === 48 ? '#16a34a' : '#dc2626';
+    }
+
+    // Enable Apply button ONLY if total is exactly 48
+    const applyBtn = document.getElementById('btn-modal-apply');
+    if (applyBtn) {
+        applyBtn.disabled = totalSelected !== 48;
+    }
+}
+
+function closeCustomModal() {
+    document.getElementById('custom-modal').classList.remove('open');
+}
+
+// Event Listeners
+document.getElementById('mode-2026').addEventListener('click', () => {
+    document.getElementById('mode-2026').classList.add('active');
+    document.getElementById('mode-custom').classList.remove('active');
+
+    pot1custom.length = 0; pot1custom.push(...DEFAULT_POT1);
+    pot2custom.length = 0; pot2custom.push(...DEFAULT_POT2);
+    pot3custom.length = 0; pot3custom.push(...DEFAULT_POT3);
+    pot4custom.length = 0; pot4custom.push(...DEFAULT_POT4);
+
+    initGUI();
+});
+
+document.getElementById('mode-custom').addEventListener('click', () => {
+    openCustomModal();
+});
+
+document.getElementById('btn-modal-cancel').addEventListener('click', () => {
+    closeCustomModal();
+});
+
+document.getElementById('btn-modal-apply').addEventListener('click', () => {
+    if (selectedCustomTeams.length !== 48) return;
+
+    document.getElementById('mode-custom').classList.add('active');
+    document.getElementById('mode-2026').classList.remove('active');
+
+    var customTeamsObj = countryPool.filter(t => selectedCustomTeams.includes(t.code));
+    customTeamsObj.sort(function(a,b){return a.ranking-b.ranking});
+
+    const chunkSize = Math.ceil(customTeamsObj.length / 4);
+    pot1custom.length = 0; pot1custom.push(...customTeamsObj.slice(0, chunkSize));
+    pot2custom.length = 0; pot2custom.push(...customTeamsObj.slice(chunkSize, chunkSize * 2));
+    pot3custom.length = 0; pot3custom.push(...customTeamsObj.slice(chunkSize * 2, chunkSize * 3));
+    pot4custom.length = 0; pot4custom.push(...customTeamsObj.slice(chunkSize * 3));
+
+    closeCustomModal();
+    initGUI();
 });
 
 // Run on load

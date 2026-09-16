@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Double-Elimination WC 2026</title>
     <meta name="description" content="A simulator for a double-elimination format of the 48-team World Cup, as proposed by César Rennó-Costa (2023).">
-    <meta property="og:title" content="Double-Elimination WC 2026">
-    <meta property="og:description" content="A simulator for a double-elimination format of the 48-team World Cup, as proposed by César Rennó-Costa (2023).">
     <style>
         :root {
             --bg-color: #f4f7f6;
@@ -15,19 +13,14 @@
             --text-color: #333333;
             --btn-bg: #2c3e50;
             --btn-hover: #1a252f;
-            /* Winner colors */
             --winner-bg: #f5f1e8;
             --winner-text: #7d6b2e;
-            /* Advanced colors */
             --advanced-bg: #e8f5e9;
             --advanced-text: #2e7d32;
-            /* Demoted colors */
             --demoted-bg: #f5eee8;
             --demoted-text: #7d542e;
-            /* Eliminated colors */
             --eliminated-bg: #f5e8e8;
             --eliminated-text: #7d2e2e;
-            /* Promoted colors */
             --promoted-bg: #e8edf5;
             --promoted-text: #2e4e7d;
         }
@@ -43,14 +36,59 @@
             height: 100vh;
         }
 
+        /* Header Title & Mode Selector Container */
+        .app-header {
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 16px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .app-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.01em;
+        }
+
+        .mode-selector {
+            display: inline-flex;
+            background-color: #0f172a;
+            padding: 3px;
+            border-radius: 8px;
+            gap: 3px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            color: #94a3b8;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-btn.active {
+            background-color: #2563eb;
+            color: #ffffff;
+        }
+
         /* Fixed Control Panel */
         .controls {
             background-color: white;
-            padding: 15px 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 10px 16px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             position: sticky;
             top: 0;
@@ -61,16 +99,19 @@
             background-color: var(--btn-bg);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 8px 14px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: background-color 0.2s;
         }
 
-        button:hover {
-            background-color: var(--btn-hover);
+        button:hover { background-color: var(--btn-hover); }
+        button:disabled {
+            color: rgba(255, 255, 255, 0.658);
+            background-color: #718599;
+            cursor: default;
         }
 
         /* Bracket Layouts */
@@ -79,17 +120,16 @@
             overflow-x: auto;
             overflow-y: auto;
             padding: 20px;
-            position: relative; /* Anchor for SVG overlay */
+            position: relative;
         }
 
-        /* SVG overlay for bracket connections */
         .connections-svg {
             position: absolute;
             top: 0;
             left: 0;
             pointer-events: none;
             z-index: 1;
-            overflow: visible; /* Prevents paths outside canvas bound from being clipped */
+            overflow: visible;
         }
 
         .bracket-section {
@@ -100,7 +140,7 @@
 
         .bracket-title {
             margin-bottom: 20px;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--btn-bg);
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 5px;
@@ -115,7 +155,6 @@
             padding-bottom: 20px;
         }
 
-        /* Enforces equal horizontal length/width for every single column, even if empty */
         .round {
             display: flex;
             flex-direction: column;
@@ -147,12 +186,11 @@
             width: 100%;
         }
 
-        /* Match Box Styling */
         .match {
             background-color: var(--box-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            width: 100%; /* Fills the standardized round column width */
+            width: 100%;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             overflow: hidden;
             flex-shrink: 0;
@@ -165,52 +203,19 @@
             transition: background-color 0.2s, color 0.2s;
         }
 
-        .team:first-child {
-            border-bottom: 1px solid var(--border-color);
-        }
+        .team:first-child { border-bottom: 1px solid var(--border-color); }
 
-        /* Winner Highlight Class */
-        .team.winner {
-            background-color: var(--winner-bg);
-            color: var(--winner-text);
-        }
-        .team.advanced {
-            background-color: var(--advanced-bg);
-            color: var(--advanced-text);
-        }
-        .team.demoted {
-            background-color: var(--demoted-bg);
-            color: var(--demoted-text);
-        }
-        .team.eliminated {
-            background-color: var(--eliminated-bg);
-            color: var(--eliminated-text);
-        }
-        .team.promoted {
-            background-color: var(--promoted-bg);
-            color: var(--promoted-text);
-        }
+        .team.winner { background-color: var(--winner-bg); color: var(--winner-text); }
+        .team.advanced { background-color: var(--advanced-bg); color: var(--advanced-text); }
+        .team.demoted { background-color: var(--demoted-bg); color: var(--demoted-text); }
+        .team.eliminated { background-color: var(--eliminated-bg); color: var(--eliminated-text); }
+        .team.promoted { background-color: var(--promoted-bg); color: var(--promoted-text); }
 
-        .team.winner .code,
-        .team.winner .score {
-            color: var(--winner-text);
-        }
-        .team.advanced .code,
-        .team.advanced .score {
-            color: var(--advanced-text);
-        }
-        .team.demoted .code,
-        .team.demoted .score {
-            color: var(--demoted-text);
-        }
-        .team.eliminated .code,
-        .team.eliminated .score {
-            color: var(--eliminated-text);
-        }
-        .team.promoted .code,
-        .team.promoted .score {
-            color: var(--promoted-text);
-        }
+        .team.winner .code, .team.winner .score { color: var(--winner-text); }
+        .team.advanced .code, .team.advanced .score { color: var(--advanced-text); }
+        .team.demoted .code, .team.demoted .score { color: var(--demoted-text); }
+        .team.eliminated .code, .team.eliminated .score { color: var(--eliminated-text); }
+        .team.promoted .code, .team.promoted .score { color: var(--promoted-text); }
 
         .flag {
             width: 24px;
@@ -237,7 +242,6 @@
             font-size: 0.95rem;
         }
 
-        /* Date & Venue Footer Line */
         .match-meta {
             font-size: 0.68rem;
             color: #888;
@@ -249,10 +253,182 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        /* --- MOBILE FRIENDLY MODAL DIALOG --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 16px;
+            background: #f8fafc;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #1e293b;
+        }
+
+        .modal-sub {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin: 4px 0 0 0;
+        }
+
+        .modal-body {
+            padding: 16px;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px;
+        }
+
+        .country-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            user-select: none;
+            background: #fff;
+            transition: all 0.15s ease;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .country-chip:hover {
+            border-color: #94a3b8;
+        }
+
+        .country-chip.selected {
+            background-color: #eff6ff;
+            border-color: #2563eb;
+            color: #1d4ed8;
+        }
+
+        .modal-footer {
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-btn-confirm {
+            background-color: #2563eb;
+        }
+        .modal-btn-confirm:hover { background-color: #1d4ed8; }
+        
+        .modal-btn-cancel {
+            background-color: #64748b;
+        }
+        .modal-btn-cancel:hover { background-color: #475569; }
+
+        /* Confederation Group Layout */
+        .confed-header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1e293b;
+            border-bottom: 2px solid var(--border-color);
+            padding: 10px 0 4px 0;
+            margin-top: 6px;
+        }
+
+        .confed-badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .confed-badge.valid {
+            background-color: #dcfce7;
+            color: #15803d;
+        }
+
+        .confed-badge.invalid {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .confed-group {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 600px) {
+            .app-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .mode-selector {
+                justify-content: center;
+            }
+            .modal-body {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Header with Title and Independent 2026/Custom Mode Switcher -->
+    <header class="app-header">
+        <h1 class="app-title">Double-Elimination 48-team World Cup</h1>
+        <div class="mode-selector">
+            <button id="mode-2026" class="mode-btn active">2026</button>
+            <button id="mode-custom" class="mode-btn">Custom</button>
+        </div>
+    </header>
+
+    <!-- Tournament Control Panel -->
     <div class="controls">
         <button id="btn-draw">Draw</button>
         <button id="btn-next">Next Round</button>
@@ -260,6 +436,7 @@
         <button id="btn-reset">Reset</button>
     </div>
 
+    <!-- Bracket Display -->
     <div class="scroller" id="bracket-scroller">
         <svg id="connections-svg" class="connections-svg"></svg>
         
@@ -272,7 +449,23 @@
             <h2 class="bracket-title">Repechage Bracket</h2>
             <div id="repechage-bracket" class="bracket"></div>
         </div>
+    </div>
 
+    <!-- Country Selection Modal Overlay -->
+    <div id="custom-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3>Custom Country Selection</h3>
+                    <p class="modal-sub">Selected <span id="selected-count">48</span> of 48 teams</p>
+                </div>
+            </div>
+            <div id="modal-country-grid" class="modal-body"></div>
+            <div class="modal-footer">
+                <button id="btn-modal-cancel" class="modal-btn-cancel">Cancel</button>
+                <button id="btn-modal-apply" class="modal-btn-confirm">Apply & Reset</button>
+            </div>
+        </div>
     </div>
 
     <script src="code.js"></script>
