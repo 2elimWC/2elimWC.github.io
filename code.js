@@ -70,8 +70,8 @@ const mainBracketConfig = {
         { name: 'Round 3', teams: 12 },
         { name: 'Round 4', teams: 8 },
         { name: 'Round 5', teams: 4 },
-        { name: 'Round 6', teams: 0 },
-        { name: 'Round 7', teams: 0 },
+        { name: '-', teams: 0 },
+        { name: '-', teams: 0 },
         { name: 'Semi-Final', teams: 4 },
         { name: 'Final', teams: 2 }
     ]
@@ -80,14 +80,14 @@ const mainBracketConfig = {
 const repechageBracketConfig = {
     id: 'repechage-bracket',
     rounds: [
-        { name: 'Round 1', teams: 0 },
+        { name: '-', teams: 0 },
         { name: 'Round 2', teams: 24 },
         { name: 'Round 3', teams: 24 },
         { name: 'Round 4', teams: 16 },
         { name: 'Round 5', teams: 12 },
         { name: 'Round 6', teams: 8 },
         { name: 'Round 7', teams: 4 },
-        { name: 'Semi-Final', teams: 0 },
+        { name: '-', teams: 0 },
         { name: 'Third Place Match', teams: 2 }
     ]
 };
@@ -476,7 +476,6 @@ function renderBracket(config) {
     const container = document.getElementById(config.id);
     container.innerHTML = ''; 
 
-    // Use the second argument 'roundIndex' of forEach
     config.rounds.forEach((round, roundIndex) => {
         const matchCount = round.teams / 2;
         
@@ -489,25 +488,41 @@ function renderBracket(config) {
         roundDiv.appendChild(header);
 
         const matchesContainer = document.createElement('div');
-        matchesContainer.className = 'matches-container';
-
-        for (let matchIndex = 0; matchIndex < matchCount; matchIndex++) {
-            const temp = document.createElement('div');
-            temp.innerHTML = createMatchHTML();
-            const matchEl = temp.firstElementChild;
-            
-            // --- ADD THESE DATA ATTRIBUTES ---
-            matchEl.setAttribute('data-bracket', config.id); // e.g., 'main-bracket'
-            matchEl.setAttribute('data-round', roundIndex);   // e.g., 0, 1, 2...
-            matchEl.setAttribute('data-match', matchIndex);   // e.g., 0, 1, 2...
-            
-            matchesContainer.appendChild(matchEl);
+        
+        // Handle rest days
+        if (matchCount === 0 && config.id === 'main-bracket') {
+            matchesContainer.className = 'matches-container rest-days';
+            matchesContainer.innerHTML = `<span class="rest-label">Rest Days</span>`;
+        } else {
+            matchesContainer.className = 'matches-container';
+            for (let matchIndex = 0; matchIndex < matchCount; matchIndex++) {
+                const temp = document.createElement('div');
+                temp.innerHTML = createMatchHTML();
+                const matchEl = temp.firstElementChild;
+                
+                matchEl.setAttribute('data-bracket', config.id);
+                matchEl.setAttribute('data-round', roundIndex);
+                matchEl.setAttribute('data-match', matchIndex);
+                
+                matchesContainer.appendChild(matchEl);
+            }
         }
 
         roundDiv.appendChild(matchesContainer);
         container.appendChild(roundDiv);
     });
 }
+
+// Collapsible toggle handlers
+document.getElementById('main-bracket-toggle').addEventListener('click', () => {
+    document.getElementById('main-section').classList.toggle('collapsed');
+    drawDynamicConnections();
+});
+
+document.getElementById('repechage-bracket-toggle').addEventListener('click', () => {
+    document.getElementById('repechage-section').classList.toggle('collapsed');
+    drawDynamicConnections();
+});
 
 function getMatchElement(bracketId, roundIndex, matchIndex) {
     // Looks for an element like: .match[data-bracket="main-bracket"][data-round="2"][data-match="4"]
@@ -708,6 +723,8 @@ function nextRound() {
     //disable new draw
     document.getElementById("btn-draw").disabled = true
 
+    if (round == 9) return; //avoid error after finishing all rounds
+
     // decide game results for both brackets
     for (let i=0; i<mainBracketConfig.rounds[round].teams/2; i++) {
         var match = getMatchElement('main-bracket', round, i);
@@ -724,7 +741,7 @@ function nextRound() {
         if (tooManyGoals > 0) {
             if (t1GoalsMean>t2GoalsMean) {
                 t1GoalsMean = t2GoalsMean + 4;
-                while (Math.random()>0.5 && tooManyGoals > 0) {
+                while (Math.random()>0.7 && tooManyGoals > 0) {
                     //console.log(team1code, t1GoalsMean, team2code, t2GoalsMean);
                     t1GoalsMean ++;
                     tooManyGoals --;
@@ -732,7 +749,7 @@ function nextRound() {
             }
             else {
                 t2GoalsMean = t1GoalsMean + 4;
-                while (Math.random()>0.5 && tooManyGoals > 0) {
+                while (Math.random()>0.7 && tooManyGoals > 0) {
                     //console.log(team1code, t1GoalsMean, team2code, t2GoalsMean);
                     t2GoalsMean ++;
                     tooManyGoals --;
