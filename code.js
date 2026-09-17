@@ -223,6 +223,137 @@ const GAME_SCHEDULE = {
     }
 };
 
+const GAME_SCHEDULE_DEFAULT = {
+    'main-bracket': {
+        0: [
+            { date: 'Day 1', venue: 'TBD' },
+            { date: 'Day 1', venue: 'TBD' },
+            { date: 'Day 1', venue: 'TBD' },
+            { date: 'Day 2', venue: 'TBD' },
+            { date: 'Day 2', venue: 'TBD' },
+            { date: 'Day 2', venue: 'TBD' },
+            { date: 'Day 1', venue: 'TBD' },
+            { date: 'Day 2', venue: 'TBD' },
+            { date: 'Day 3', venue: 'TBD' },
+            { date: 'Day 3', venue: 'TBD' },
+            { date: 'Day 3', venue: 'TBD' },
+            { date: 'Day 3', venue: 'TBD' },
+            { date: 'Day 4', venue: 'TBD' },
+            { date: 'Day 4', venue: 'TBD' },
+            { date: 'Day 4', venue: 'TBD' },
+            { date: 'Day 4', venue: 'TBD' },
+            { date: 'Day 5', venue: 'TBD' },
+            { date: 'Day 5', venue: 'TBD' },
+            { date: 'Day 5', venue: 'TBD' },
+            { date: 'Day 5', venue: 'TBD' },
+            { date: 'Day 6', venue: 'TBD' },
+            { date: 'Day 6', venue: 'TBD' },
+            { date: 'Day 6', venue: 'TBD' },
+            { date: 'Day 6', venue: 'TBD' }
+        ],
+        1: [
+            { date: 'Day 7', venue: 'TBD' },
+            { date: 'Day 7', venue: 'TBD' },
+            { date: 'Day 8', venue: 'TBD' },
+            { date: 'Day 8', venue: 'TBD' },
+            { date: 'Day 9', venue: 'TBD' },
+            { date: 'Day 9', venue: 'TBD' },
+            { date: 'Day 10', venue: 'TBD' },
+            { date: 'Day 10', venue: 'TBD' },
+            { date: 'Day 11', venue: 'TBD' },
+            { date: 'Day 11', venue: 'TBD' },
+            { date: 'Day 12', venue: 'TBD' },
+            { date: 'Day 12', venue: 'TBD' }
+        ],
+        2: [
+            { date: 'Day 13', venue: 'TBD' },
+            { date: 'Day 13', venue: 'TBD' },
+            { date: 'Day 14', venue: 'TBD' },
+            { date: 'Day 15', venue: 'TBD' },
+            { date: 'Day 16', venue: 'TBD' },
+            { date: 'Day 16', venue: 'TBD' }
+        ],
+        3: [
+            { date: 'Day 19', venue: 'TBD' },
+            { date: 'Day 20', venue: 'TBD' },
+            { date: 'Day 20', venue: 'TBD' },
+            { date: 'Day 21', venue: 'TBD' }
+        ],
+        4: [
+            { date: 'Day 24', venue: 'TBD' },
+            { date: 'Day 25', venue: 'TBD' }
+        ],
+        7: [
+            { date: 'Day 34', venue: 'TBD' },
+            { date: 'Day 35', venue: 'TBD' }
+        ],
+        8: [
+            { date: 'Day 39', venue: 'TBD' }
+        ]
+    },
+    'repechage-bracket': {
+        1: [
+            { date: 'Day 7', venue: 'TBD' },
+            { date: 'Day 7', venue: 'TBD' },
+            { date: 'Day 8', venue: 'TBD' },
+            { date: 'Day 8', venue: 'TBD' },
+            { date: 'Day 9', venue: 'TBD' },
+            { date: 'Day 9', venue: 'TBD' },
+            { date: 'Day 10', venue: 'TBD' },
+            { date: 'Day 10', venue: 'TBD' },
+            { date: 'Day 11', venue: 'TBD' },
+            { date: 'Day 11', venue: 'TBD' },
+            { date: 'Day 12', venue: 'TBD' },
+            { date: 'Day 12', venue: 'TBD' }
+        ],
+        2: [
+            { date: 'Day 13', venue: 'TBD' },
+            { date: 'Day 13', venue: 'TBD' },
+            { date: 'Day 14', venue: 'TBD' },
+            { date: 'Day 14', venue: 'TBD' },
+            { date: 'Day 14', venue: 'TBD' },
+            { date: 'Day 15', venue: 'TBD' },
+            { date: 'Day 15', venue: 'TBD' },
+            { date: 'Day 15', venue: 'TBD' },
+            { date: 'Day 16', venue: 'TBD' },
+            { date: 'Day 16', venue: 'TBD' },
+            { date: 'Day 16', venue: 'TBD' },
+            { date: 'Day 16', venue: 'TBD' }
+        ],
+        3: [
+            { date: 'Day 19', venue: 'TBD' },
+            { date: 'Day 19', venue: 'TBD' },
+            { date: 'Day 19', venue: 'TBD' },
+            { date: 'Day 20', venue: 'TBD' },
+            { date: 'Day 20', venue: 'TBD' },
+            { date: 'Day 21', venue: 'TBD' },
+            { date: 'Day 21', venue: 'TBD' },
+            { date: 'Day 21', venue: 'TBD' }
+        ],
+        4: [
+            { date: 'Day 23', venue: 'TBD' },
+            { date: 'Day 23', venue: 'TBD' },
+            { date: 'Day 24', venue: 'TBD' },
+            { date: 'Day 24', venue: 'TBD' },
+            { date: 'Day 24', venue: 'TBD' },
+            { date: 'Day 25', venue: 'TBD' }
+        ],
+        5: [
+            { date: 'Day 26', venue: 'TBD' },
+            { date: 'Day 27', venue: 'TBD' },
+            { date: 'Day 27', venue: 'TBD' },
+            { date: 'Day 28', venue: 'TBD' }
+        ],
+        6: [
+            { date: 'Day 30', venue: 'TBD' },
+            { date: 'Day 31', venue: 'TBD' },
+        ],
+        8: [
+            { date: 'Day 38', venue: 'TBD' }
+        ]
+    }
+};
+
 // Generates the raw HTML structure for a match
 function createMatchHTML() {
     return `
@@ -311,7 +442,6 @@ function updateMatchData(matchElement, score1, score2) {
     }
 }
 
-// --- STANDALONE META INJECTION FUNCTION ---
 function injectMatchMeta() {
     const allMatches = document.querySelectorAll('.match');
 
@@ -322,13 +452,12 @@ function injectMatchMeta() {
 
         let metaText = '';
 
-        // Retrieve exact 1:1 match metadata if defined
-        if (GAME_SCHEDULE[bracketId]?.[roundIdx]?.[matchIdx]) {
+        if (document.getElementById('mode-2026').classList.contains('active')) {
             const info = GAME_SCHEDULE[bracketId][roundIdx][matchIdx];
             metaText = `${info.date} | ${info.venue}`;
         } else {
-            // Fallback unique 1:1 template if a specific game isn't explicitly listed above
-            metaText = `ROUND ${roundIdx + 1} GAME ${matchIdx + 1} | TBD VENUE`;
+            const info = GAME_SCHEDULE_DEFAULT[bracketId][roundIdx][matchIdx];
+            metaText = `${info.date} | ${info.venue}`;
         }
 
         // Find existing meta element or create one
@@ -554,7 +683,7 @@ function poisson(lambda) {
 var round = 0;
 
 function initGUI() {
-    if ((document.getElementById('mode-2026').classList.contains('active'))) {
+    if (document.getElementById('mode-2026').classList.contains('active')) {
         teamlist = pot1.concat(pot2, pot3, pot4);
         newTeamlist = teamlist.slice();
     } else {
@@ -596,7 +725,7 @@ function nextRound() {
             if (t1GoalsMean>t2GoalsMean) {
                 t1GoalsMean = t2GoalsMean + 4;
                 while (Math.random()>0.5 && tooManyGoals > 0) {
-                    console.log(team1code, team2code);
+                    //console.log(team1code, t1GoalsMean, team2code, t2GoalsMean);
                     t1GoalsMean ++;
                     tooManyGoals --;
                 }
@@ -604,7 +733,7 @@ function nextRound() {
             else {
                 t2GoalsMean = t1GoalsMean + 4;
                 while (Math.random()>0.5 && tooManyGoals > 0) {
-                    console.log(team1code, team2code);
+                    //console.log(team1code, t1GoalsMean, team2code, t2GoalsMean);
                     t2GoalsMean ++;
                     tooManyGoals --;
                 }
@@ -1205,11 +1334,6 @@ function closeCustomModal() {
 document.getElementById('mode-2026').addEventListener('click', () => {
     document.getElementById('mode-2026').classList.add('active');
     document.getElementById('mode-custom').classList.remove('active');
-
-    pot1custom.length = 0; pot1custom.push(...DEFAULT_POT1);
-    pot2custom.length = 0; pot2custom.push(...DEFAULT_POT2);
-    pot3custom.length = 0; pot3custom.push(...DEFAULT_POT3);
-    pot4custom.length = 0; pot4custom.push(...DEFAULT_POT4);
 
     initGUI();
 });
