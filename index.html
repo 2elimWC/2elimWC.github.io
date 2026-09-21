@@ -55,6 +55,12 @@
             letter-spacing: -0.01em;
         }
 
+        .header-controls-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
         .mode-selector {
             display: inline-flex;
             background-color: #0f172a;
@@ -78,6 +84,30 @@
         .mode-btn.active {
             background-color: #2563eb;
             color: #ffffff;
+        }
+
+        /* Info Button Styling */
+        .info-btn {
+            background-color: #0f172a;
+            color: #94a3b8;
+            border: 1px solid #334155;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+
+        .info-btn:hover {
+            background-color: #2563eb;
+            color: #ffffff;
+            border-color: #2563eb;
         }
 
         .controls {
@@ -364,6 +394,23 @@
             gap: 8px;
         }
 
+        /* Info Window Content Styling */
+        .info-body {
+            display: block;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            color: #334155;
+        }
+
+        .info-body p {
+            margin: 0 0 12px 0;
+        }
+
+        .txt-advanced { color: #2e7d32; font-weight: 700; }
+        .txt-demoted { color: #7d542e; font-weight: 700; }
+        .txt-eliminated { color: #7d2e2e; font-weight: 700; }
+        .txt-promoted { color: #2e4e7d; font-weight: 700; }
+
         .country-chip {
             display: flex;
             align-items: center;
@@ -391,7 +438,7 @@
             background: #f8fafc;
             border-top: 1px solid var(--border-color);
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             gap: 12px;
         }
@@ -427,15 +474,16 @@
         .confed-group {
             grid-column: 1 / -1;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 8px;
             margin-bottom: 8px;
         }
 
         @media (max-width: 600px) {
             .app-header { flex-direction: column; align-items: stretch; text-align: center; }
-            .mode-selector { justify-content: center; }
+            .header-controls-wrapper { justify-content: center; }
             .modal-body { grid-template-columns: repeat(2, 1fr); }
+            .confed-group { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -443,9 +491,12 @@
 
     <header class="app-header">
         <h1 class="app-title">Double-Elimination 48-team World Cup</h1>
-        <div class="mode-selector">
-            <button id="mode-2026" class="mode-btn active">2026</button>
-            <button id="mode-custom" class="mode-btn">Custom</button>
+        <div class="header-controls-wrapper">
+            <div class="mode-selector">
+                <button id="mode-2026" class="mode-btn active">2026</button>
+                <button id="mode-custom" class="mode-btn">Custom</button>
+            </div>
+            <button id="btn-info" class="info-btn" aria-label="Tournament Information">ⓘ</button>
         </div>
     </header>
 
@@ -476,6 +527,28 @@
         </div>
     </div>
 
+    <!-- Info Modal -->
+    <div id="info-modal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3>Double-Elimination format explained</h3>
+                </div>
+            </div>
+            <div class="modal-body info-body">
+                <p>This simulator runs example 48-team World Cups with the double-elimination format proposed by <a href="https://www.researchgate.net/publication/366983889_A_double-elimination_format_for_a_48-team_FIFA_World_Cup">César Rennó-Costa in his 2023 paper</a>.</p>
+                <p>Every team starts in the <strong>Main Bracket</strong>. Winning allows them to <span class="txt-advanced">Advance</span> to the next round, while losing <span class="txt-demoted">Demotes</span> them to the <strong>Repechage Bracket</strong>.</p>
+                <p>Losing a second time while in the Repechage Bracket <span class="txt-eliminated">Eliminates</span> them from the tournament entirely.</p>
+                <p>There are two windows for a demoted team to be <span class="txt-promoted">Promoted</span> back to the Main Bracket: the first is to be one of two teams with the best Goal Difference that advances out of Round 3. The second is to get one of two semi-final tickets by winning every game up to Round 7.</p>
+                <p>You can run simulations with the 2026 teams at their pre-tournament strengths, or make a custom World Cup by picking the 48 teams you want to participate at their current strengths as of September 2026.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-info-close" class="modal-btn-cancel">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Country Modal -->
     <div id="custom-modal" class="modal-overlay">
         <div class="modal-card">
             <div class="modal-header">

@@ -1355,6 +1355,25 @@ document.getElementById('mode-2026').addEventListener('click', () => {
     initGUI();
 });
 
+const infoModal = document.getElementById('info-modal');
+const btnInfo = document.getElementById('btn-info');
+const btnInfoClose = document.getElementById('btn-info-close');
+
+btnInfo.addEventListener('click', () => {
+    infoModal.classList.add('open');
+});
+
+btnInfoClose.addEventListener('click', () => {
+    infoModal.classList.remove('open');
+});
+
+// Close modal when clicking on background overlay
+infoModal.addEventListener('click', (e) => {
+    if (e.target === infoModal) {
+        infoModal.classList.remove('open');
+    }
+});
+
 document.getElementById('mode-custom').addEventListener('click', () => {
     openCustomModal();
 });
