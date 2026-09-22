@@ -853,7 +853,7 @@ function nextRound() {
         while (promotedArr.length<2) {
             var promotedTeam = teamsByGD.shift();
             var promoteOrNot = false;
-            for (let j=0; j<6; j++) {
+            for (let j=0; j<12; j++) {
                 if ((getMatchElement('repechage-bracket', 2, j).querySelector('.team.advanced')).querySelector('.code').innerText === promotedTeam.code)
                     promoteOrNot = true;
             }
